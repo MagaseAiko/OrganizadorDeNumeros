@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organizador de Números</title>
+    <style>
+        /* styles.css */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+            background: #1e1e1e;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            border: 1px solid #333;
+            border-radius: 4px;
+            background: #2c2c2c;
+            color: #fff;
+            resize: none;
+            margin-bottom: 10px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .output {
+            text-align: left;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.5;
+            word-wrap: break-word;
+        }
+    </style>>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Organizador de Números</h1>
+        <textarea id="input-numbers" placeholder="Insira os números separados por vírgulas..."></textarea>
+        <div class="buttons">
+            <button id="sort-ascending">Organizar Crescente</button>
+            <button id="sort-descending">Organizar Decrescente</button>
+        </div>
+        <div class="output">
+            <h3>Resultado:</h3>
+            <p id="sorted-numbers">Nenhum número organizado ainda.</p>
+            <p id="count-numbers">Total: 0 números organizados.</p>
+        </div>
+    </div>
+    <script>
+        // script.js
+        function sortNumbers(order) {
+            const input = document.getElementById('input-numbers').value;
+            const outputSorted = document.getElementById('sorted-numbers');
+            const outputCount = document.getElementById('count-numbers');
+
+            if (!input.trim()) {
+                outputSorted.innerHTML = 'Por favor, insira números válidos.';
+                outputCount.textContent = 'Total: 0 números organizados.';
+                return;
+            }
+
+            const numbers = input.split(',').map(item => item.trim());
+
+            const sortedNumbers = numbers.sort((a, b) => {
+                const numA = parseInt(a.match(/\d+/)[0], 10);
+                const numB = parseInt(b.match(/\d+/)[0], 10);
+                return order === 'asc' ? numA - numB : numB - numA;
+            });
+
+            outputSorted.innerHTML = `Números Organizados: <br>${sortedNumbers.join(', ')}`;
+            outputCount.textContent = `Total: ${sortedNumbers.length} números organizados.`;
+        }
+
+        document.getElementById('sort-ascending').addEventListener('click', () => sortNumbers('asc'));
+        document.getElementById('sort-descending').addEventListener('click', () => sortNumbers('desc'));
+
+    </script>
+</body>
+
+</html>
